@@ -1,0 +1,64 @@
+/* Ticket.css */
+html{
+  background-color: white;
+}
+.ticket-container- {
+    background-color: white;
+    height: 100%;
+    margin-top: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+.volver-al-menu{
+    cursor:pointer;
+    color: blue;
+    display: flex;
+    justify-content: end;
+}
+.ticket-container {
+    background-color: #F4CBE3;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .ticket-container__title {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .ticket-container__info {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .ticket-container__subtitle {
+    color: white;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .ticket-container__products-list {
+    margin-bottom: 20px;
+  }
+  
+  .ticket-container__product-item {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .ticket-container__no-stock-products-list {
+    margin-bottom: 20px;
+  }
+  
+  .ticket-container__no-stock-item {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: red;
+  }
+  
