@@ -38,7 +38,7 @@ function ProductList() {
                 console.error("Error al obtener productos:", error)
                 setLoading(false);
             });
-    }, []);
+    }, [baseURL]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -54,7 +54,7 @@ function ProductList() {
                 setUser(data.user);
           })
           .catch(error => console.error("Error de login:", error));
-    }, []);
+    }, [baseURL]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -70,7 +70,7 @@ function ProductList() {
                 .then(data => setCartItemCount(data.product.length))
                 .catch(error => console.error("Error al obtener productos del carrito:", error));
         }
-    }, [user]);
+    }, [user,baseURL]);
 
     const addToCart = (productId) => {
         const token = localStorage.getItem('token');

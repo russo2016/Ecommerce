@@ -42,7 +42,7 @@ function Ticket() {
         })
         .catch((error) => console.error("Error al cargar detalles de productos:", error));
     }
-  }, [ticket]);
+  }, [ticket,baseURL]);
 
   if (!ticket) {
     return <p>No se encontró la información del ticket.</p>;
