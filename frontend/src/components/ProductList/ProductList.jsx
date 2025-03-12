@@ -6,7 +6,10 @@ function ProductList() {
     const [products, setProducts] = useState([]);
     const [cartItemCount, setCartItemCount] = useState(0);
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+
+    const baseURL = import.meta.env.VITE_API_BASE_URL;
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -17,7 +20,8 @@ function ProductList() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        fetch(`http://localhost:8080/api/products`, {
+        setLoading(true);
+        fetch(`${baseURL}/products`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -28,13 +32,17 @@ function ProductList() {
             .then(response => response.json())
             .then(data => {
                 setProducts(data);
+                setLoading(false);
             })
-            .catch(error => console.error("Error al obtener productos:", error));
+            .catch(error => {
+                console.error("Error al obtener productos:", error)
+                setLoading(false);
+            });
     }, []);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        fetch('http://localhost:8080/api/sessions/current', {
+        fetch(`${baseURL}/sessions/current`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -51,7 +59,7 @@ function ProductList() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (user) {
-            fetch(`http://localhost:8080/api/carts/${user.cart}`, {
+            fetch(`${baseURL}/carts/${user.cart}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -66,7 +74,7 @@ function ProductList() {
 
     const addToCart = (productId) => {
         const token = localStorage.getItem('token');
-        fetch(`http://localhost:8080/api/carts/${user.cart}/products/${productId}`, {
+        fetch(`${baseURL}/carts/${user.cart}/products/${productId}`, {
             method: "POST",
             headers: { "Content-Type": "application/json",
                         "Authorization": `Bearer ${token}`
@@ -95,6 +103,14 @@ function ProductList() {
         navigate("/cart");
     }
 
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <div className="loading"></div>
+            </div>
+        );
+      }
+
     return (
         <div className="wrapper">
             <aside>
@@ -117,7 +133,7 @@ function ProductList() {
                     </ul>
                 </nav>
                 <footer>
-                    <p className="texto-footer">© 2024 Russo ecommerce</p>
+                    <p className="texto-footer">© 2025 Russo ecommerce</p>
                 </footer>
             </aside>
             

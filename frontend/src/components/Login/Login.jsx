@@ -8,10 +8,11 @@ function Login() {
 
     const navigate = useNavigate();
 
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch("http://localhost:8080/api/sessions/login", {
+            const response = await fetch(`${baseUrl}/sessions/login`, {
                 method: "POST",
                 headers: {
                 'Content-Type': 'application/json',

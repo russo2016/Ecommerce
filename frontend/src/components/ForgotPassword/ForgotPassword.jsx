@@ -6,11 +6,12 @@ function ForgotPassword(){
     const [email, setEmail] = useState("");
 
     const navigate = useNavigate();
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch(`http://localhost:8080/api/sessions/forgotPassword`, {
+            const response = await fetch(`${baseUrl}/sessions/forgotPassword`, {
                 method: "POST",
                 headers: {
                 'Content-Type': 'application/json'

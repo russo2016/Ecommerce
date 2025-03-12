@@ -8,10 +8,12 @@ function NewPassword() {
     const { email } = useParams();
     const navigate = useNavigate();
 
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch(`http://localhost:8080/api/sessions/forgotPassword/${email}`, {
+            const response = await fetch(`${baseUrl}/sessions/forgotPassword/${email}`, {
                 method: "POST",
                 headers: {
                 'Content-Type': 'application/json'

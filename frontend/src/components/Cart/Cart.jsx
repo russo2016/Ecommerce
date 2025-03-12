@@ -6,15 +6,18 @@ function Cart () {
     const [products, setProducts] = useState([]);
     const [cartProducts, setCartProducts] = useState([]);
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
+
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         const fetchSessionAndCart = async () => {
           try {
             // Obtener la sesión actual
-            const sessionResponse = await fetch('http://localhost:8080/api/sessions/current', {
+            const sessionResponse = await fetch(`${baseUrl}/sessions/current`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -25,7 +28,8 @@ function Cart () {
             setUser(sessionData.user);
             
             if (sessionData.user) {
-              const cartResponse = await fetch(`http://localhost:8080/api/carts/${sessionData.user.cart}`, {
+              setLoading(true);
+              const cartResponse = await fetch(`${baseUrl}/carts/${sessionData.user.cart}`, {
                 method: "GET",
                 headers: {
                   "Content-Type": "application/json",
@@ -34,6 +38,7 @@ function Cart () {
               });
               const cartData = await cartResponse.json();
               setProducts(cartData.product);
+              setLoading(false);
             }
           } catch (error) {
             console.error("Error al obtener sesión o productos del carrito:", error);
@@ -51,7 +56,7 @@ function Cart () {
           try {
             const updatedProducts = await Promise.all(
               products.map(async (item) => {
-                const resp = await fetch(`http://localhost:8080/api/products/${item.product}`, {
+                const resp = await fetch(`${baseUrl}/products/${item.product}`, {
                   method: "GET",
                   headers: {
                     "Content-Type": "application/json",
@@ -74,7 +79,7 @@ function Cart () {
     const deleteCart = async () => {
         const token = localStorage.getItem('token');
         try {
-          const response = await fetch(`http://localhost:8080/api/carts/${user.cart}`, {
+          const response = await fetch(`${baseUrl}/carts/${user.cart}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
@@ -95,7 +100,7 @@ function Cart () {
         const token = localStorage.getItem('token');
         const productId = e.target.getAttribute("data-product-id");
         try {
-          const response = await fetch(`http://localhost:8080/api/carts/${user.cart}/products/${productId}`, {
+          const response = await fetch(`${baseUrl}/carts/${user.cart}/products/${productId}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
@@ -121,7 +126,7 @@ function Cart () {
             console.error("No hay productos en el carrito");
             return;
           }
-          const response = await fetch(`http://localhost:8080/api/carts/${user.cart}/purchase`, {
+          const response = await fetch(`${baseUrl}/carts/${user.cart}/purchase`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -156,7 +161,14 @@ function Cart () {
     const goProducts = ()=>{
       navigate("/products")
     }
-
+    
+    if (loading) {
+      return (
+          <div className="loading-container">
+              <div className="loading"></div>
+          </div>
+      );
+    }
 
     return (
       <div className="wrapper">

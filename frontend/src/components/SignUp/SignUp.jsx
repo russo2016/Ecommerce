@@ -8,11 +8,13 @@ function SignUp(){
     const [age,setAge] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+
+    const baseURL = import.meta.env.VITE_API_BASE_URL
     
     const navigate = useNavigate();
     const onSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch("http://localhost:8080/api/sessions/signup", {
+        const response = await fetch(`${baseURL}/sessions/signup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
